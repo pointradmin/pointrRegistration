@@ -241,7 +241,7 @@ function buildFeatures(features) {
 // Hidden values collected from interactive elements
 const formState = {
   programs:    [],
-  frustration: null,
+  frustration: [],
   price:       null,
 };
 
@@ -356,7 +356,9 @@ function validateForm() {
   }
 
   // Frustration "Other" textarea (only if required in content.js)
-  if (formState.frustration === 'other' && CONTENT.form.frustrationOtherRequired) {
+  if (Array.isArray(formState.frustration) && 
+    formState.frustration.includes('other') && 
+    CONTENT.form.frustrationOtherRequired) {
     const otherText = document.getElementById('frustration-other-text');
     if (!otherText.value.trim()) {
       otherText.classList.add('error');
@@ -388,7 +390,7 @@ function handleSubmit() {
     email:              document.getElementById('email').value.trim(),
     programs:           formState.programs,
     goals:              document.getElementById('goals').value.trim(),
-    frustration:        formState.frustration,
+    frustration:        formState.frustration || [],
     frustrationOther:   document.getElementById('frustration-other-text')?.value.trim() || '',
     wouldPayPerMonth:   formState.price,
   };
@@ -423,9 +425,9 @@ function handleSubmit() {
         'Email':        submission.email,
         'Programs':     submission.programs.map(p => PROGRAM_LABELS[p] || p),
         'Goals':        submission.goals,
-        'Frustrations':       submission.frustration
-                                  ? [FRUSTRATION_LABELS[submission.frustration] || submission.frustration]
-                                  : [],
+        'Frustrations': Array.isArray(submission.frustration)
+                          ? submission.frustration.map(f => FRUSTRATION_LABELS[f] || f)
+                          : [],
         'Frustrations Details': submission.frustrationOther,
         'Would Pay':    submission.wouldPayPerMonth,
         'Timestamp':    submission.timestamp,
