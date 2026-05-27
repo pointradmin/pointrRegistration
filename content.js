@@ -24,7 +24,7 @@ const CONTENT = {
     eyebrow:   "Australian loyalty points — decoded",
     headline:  ["Your points.", "Real dollar", "value."],
     // headline[0] = parchment, headline[1] = violet italic, headline[2] = amber italic
-    subtext:   "I bought a house in Melbourne and felt every dollar. Then I found <strong>$3,511 in forgotten points</strong> across four programs I never checked.<br><br>Pointr shows you what your loyalty points are actually worth — every day, in dollars, not numbers.",
+    subtext:   "I bought a house in Melbourne and felt every dollar. Then I found <strong>$3,511 in forgotten points</strong> across four programs I never checked.<br><br>Pointr shows you what your loyalty points are actuall worth and how you can maximise their use. Real value - updated daily.",
     stats: [
       { number: "8+",  label: "Programs tracked" },
       { number: "1",   label: "Daily insight",    amber: true },
@@ -36,7 +36,7 @@ const CONTENT = {
   incentive: {
     icon:  "🎁",
     title: "Waitlist members",
-    desc:  "No subscription ever. Full Pointr features — yours permanently as a founding member.",
+    desc:  "Register early. Get ahead faster",
   },
 
   // ── FORM ───────────────────────────────────────────────────
