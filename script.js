@@ -298,17 +298,20 @@ function onProgramChange(checkbox) {
 
 
 // ── FRUSTRATION SELECTION ─────────────────────────────────────
+// ── FRUSTRATION SELECTION ─────────────────────────────────────
 function selFrust(el) {
-  // Deselect all
-  document.querySelectorAll('.pill-opt').forEach(p => p.classList.remove('sel'));
-  // Select this one
-  el.classList.add('sel');
-  formState.frustration = el.dataset.value;
+  // Toggle this option on or off independently
+  el.classList.toggle('sel');
 
-  // Show/hide "Other" textarea
+  // Build array of all currently selected values
+  formState.frustration = [...document.querySelectorAll('.pill-opt.sel')]
+    .map(p => p.dataset.value);
+
+  // Show/hide "Other" textarea based on whether "other" is selected
   const otherWrap = document.getElementById('frustration-other-wrap');
   if (otherWrap) {
-    otherWrap.classList.toggle('show', el.dataset.value === 'other');
+    const otherSelected = formState.frustration.includes('other');
+    otherWrap.classList.toggle('show', otherSelected);
   }
 }
 
