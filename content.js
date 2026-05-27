@@ -35,7 +35,7 @@ const CONTENT = {
   // ── INCENTIVE BANNER (above the form) ──────────────────────
   incentive: {
     icon:  "🎁",
-    title: "Waitlist members get lifetime free access",
+    title: "Waitlist members",
     desc:  "No subscription ever. Full Pointr features — yours permanently as a founding member.",
   },
 
@@ -107,7 +107,7 @@ const CONTENT = {
     ],
 
     // ── CTA BUTTON ───────────────────────────────────────────
-    ctaText:    "Claim my lifetime free access 🎁",
+    ctaText:    "Join the waiting list",
     submitNote: "Your data is handled under the Australian Privacy Act 1988. We never sell or share your information.",
   },
 
