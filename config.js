@@ -28,7 +28,7 @@ const CONFIG = {
   //    "mailchimp"  → Posts to Mailchimp (fill in keys below)
   //    "formspree"  → Posts to Formspree (fill in endpoint below)
   //
-  submitTo: "console",       // ← CHANGE THIS when you connect a backend
+  submitTo: "formspree",       // ← CHANGE THIS when you connect a backend
 
 
   // ── AIRTABLE SETTINGS (only used if submitTo: "airtable") ──
@@ -41,7 +41,7 @@ const CONFIG = {
 
   // ── FORMSPREE SETTINGS (only used if submitTo: "formspree") ─
   formspree: {
-    endpoint: "https://formspree.io/f/YOUR_FORM_ID",
+    endpoint: "https://formspree.io/f/mvzyveyj",
   },
 
 
