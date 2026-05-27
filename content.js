@@ -122,7 +122,7 @@ const CONTENT = {
   success: {
     icon:    "✓",
     title:   "You're in.",
-    message: "Lifetime free access is yours.<br><br>We'll be in touch before anyone else gets access.<br><br>Follow <strong>@pointrapp</strong> on Instagram for weekly points tips while you wait.",
+    message: "Voila, you are now 1 step ahead to be in control of your points and their monetary value.<br><br>We'll be in touch before anyone else gets access.<br><br>Follow <strong>@pointr__</strong> on Instagram for weekly points tips while you wait.",
   },
 
   // ── FEATURES SECTION ────────────────────────────────────────
