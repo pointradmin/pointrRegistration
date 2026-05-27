@@ -7,6 +7,30 @@
 //  Use config.js for behaviour toggles.
 // =============================================================
 
+const PROGRAM_LABELS = {
+  qantas:   'Qantas Frequent Flyer',
+  velocity: 'Virgin Velocity',
+  flybuys:  'Coles Flybuys',
+  everyday: 'Everyday Rewards',
+  amex:     'Amex Membership Rewards',
+  cba:      'CommBank Awards',
+  anz:      'ANZ Rewards',
+  nab:      'NAB Rewards',
+  westpac:  'Westpac Altitude',
+  nrma:     'NRMA Rewards',
+  ihg:      'IHG One Rewards',
+  marriott: 'Marriott Bonvoy',
+  other:    'Other',
+};
+
+const FRUSTRATION_LABELS = {
+  expiry:  'Points Expiring',
+  value:   'Not knowing dollar value',
+  logins:  'Too many apps / logins',
+  redeem:  'Hard to transfer or redeem',
+  other:   'Other',
+};
+
 // Wait for the DOM and content to be ready
 document.addEventListener('DOMContentLoaded', () => {
   buildPage();
@@ -383,19 +407,31 @@ function handleSubmit() {
     .then(r => r.ok ? showSuccess() : alert('Something went wrong. Please try again.'))
     .catch(() => alert('Something went wrong. Please try again.'));
 
-  } else if (CONFIG.submitTo === 'airtable') {
-    fetch(`https://api.airtable.com/v0/${CONFIG.airtable.baseId}/${CONFIG.airtable.table}`, {
-      method:  'POST',
-      headers: {
-        'Authorization': `Bearer ${CONFIG.airtable.apiKey}`,
-        'Content-Type':  'application/json',
-      },
-      body: JSON.stringify({ fields: submission }),
-    })
-    .then(r => r.ok ? showSuccess() : alert('Something went wrong. Please try again.'))
-    .catch(() => alert('Something went wrong. Please try again.'));
-
-  } else if (CONFIG.submitTo === 'mailchimp') {
+  } } else if (CONFIG.submitTo === 'airtable') {
+  fetch(`https://api.airtable.com/v0/${CONFIG.airtable.baseId}/${encodeURIComponent(CONFIG.airtable.table)}`, {
+    method:  'POST',
+    headers: {
+      'Authorization': `Bearer ${CONFIG.airtable.personalAccessToken}`,
+      'Content-Type':  'application/json',
+    },
+    body: JSON.stringify({
+      fields: {
+        'First Name':   submission.firstName,
+        'Email':        submission.email,
+        'Programs':     submission.programs.map(p => PROGRAM_LABELS[p] || p),
+        'Goals':        submission.goals,
+        'Frustrations':       submission.frustration
+                                  ? [FRUSTRATION_LABELS[submission.frustration] || submission.frustration]
+                                  : [],
+        'Frustrations Details': submission.frustrationOther,
+        'Would Pay':    submission.wouldPayPerMonth,
+        'Timestamp':    submission.timestamp,
+      }
+    }),
+  })
+  .then(r => r.ok ? showSuccess() : alert('Something went wrong. Please try again.'))
+  .catch(() => alert('Something went wrong. Please try again.'));
+} else if (CONFIG.submitTo === 'mailchimp') {
     fetch(CONFIG.mailchimp.endpoint, {
       method: 'POST',
       body:   JSON.stringify(submission),
