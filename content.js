@@ -24,7 +24,7 @@ const CONTENT = {
     eyebrow:   "Australian loyalty points — decoded",
     headline:  ["Your points.", "Real dollar", "value."],
     // headline[0] = parchment, headline[1] = violet italic, headline[2] = amber italic
-    subtext:   "I bought a house in Melbourne and felt every dollar. Then I found <strong>$3,511 in forgotten points</strong> across four programs I never checked.<br><br>Pointr shows you what your loyalty points are actuall worth and how you can maximise their use. Real value - updated daily.",
+    subtext:   "I bought a house in Melbourne and felt every dollar. Then I found <strong>$3,511 in forgotten points</strong> across four programs I never checked.<br><br>Pointr shows you what your loyalty points are actually worth and how you can maximise their use. Real value - updated daily.",
     stats: [
       { number: "8+",  label: "Programs tracked" },
       { number: "1",   label: "Daily insight",    amber: true },
@@ -43,7 +43,7 @@ const CONTENT = {
   form: {
     title:    "Get early access",
     titleEm:  "early access",   // This word goes violet italic inside the title
-    subtitle: "Takes 60 seconds. No card required.",
+    subtitle: "Takes 60 seconds.",
 
     // Field labels and placeholders
     fields: {
