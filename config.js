@@ -28,14 +28,14 @@ const CONFIG = {
   //    "mailchimp"  → Posts to Mailchimp (fill in keys below)
   //    "formspree"  → Posts to Formspree (fill in endpoint below)
   //
-  submitTo: "formspree",       // ← CHANGE THIS when you connect a backend
+  submitTo: "airtable",       // ← CHANGE THIS when you connect a backend
 
 
   // ── AIRTABLE SETTINGS (only used if submitTo: "airtable") ──
   airtable: {
-    apiKey:  "YOUR_AIRTABLE_API_KEY",
-    baseId:  "YOUR_BASE_ID",
-    table:   "Waitlist",
+    personalAccessToken:  "patyhlCFLA3eyNjgs.65f80db214ebaaedca986ff84732af09f9f2dd098adfe68774d32b6fa0147e39",
+    baseId:  "appWrwFQHjoTJBPyb",
+    table:   "Registrations",
   },
 
 
