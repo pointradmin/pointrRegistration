@@ -1,0 +1,931 @@
+/* =============================================================
+   POINTR — STYLESHEET
+   🎨  All visual design lives here.
+   ---------------------------------------------------------------
+   TABLE OF CONTENTS
+   1.  CSS Variables (colours, fonts, spacing)
+   2.  Reset & Base
+   3.  Gradient Strip
+   4.  Navigation
+   5.  Page Layout
+   6.  Hero Section
+   7.  Stats Bar
+   8.  Program Chips (hero)
+   9.  Form Card
+   10. Form Fields (inputs, selects, labels)
+   11. Program Checkboxes
+   12. Frustration Pills
+   13. Price Options
+   14. Progressive Form Reveal
+   15. Incentive Banner
+   16. Submit Button & Notes
+   17. Social Proof
+   18. Success State
+   19. Features Section
+   20. Privacy Notice
+   21. Footer
+   22. Animations
+   23. Responsive (mobile)
+   ============================================================= */
+
+
+/* ── 1. CSS VARIABLES ─────────────────────────────────────────
+   Change colours, fonts, and spacing here.
+   These variables are used everywhere — change once, updates all.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg:        #1C1208;   /* Main page background — Warm Ink */
+  --surface:   #221609;   /* Input backgrounds, nav background */
+  --card:      #2A1C0C;   /* Form card, feature cards */
+  --border:    #3A2910;   /* All borders */
+
+  /* Brand colours */
+  --violet:    #7B5CF0;   /* Primary — dollar values, CTAs, active states */
+  --vs:   rgba(123,92,240,0.15);   /* Violet subtle background */
+  --vb:   rgba(123,92,240,0.30);   /* Violet border */
+  --amber:     #E8A230;   /* Accent — celebration, earned moments */
+  --as:   rgba(232,162,48,0.10);   /* Amber subtle background */
+  --ab:   rgba(232,162,48,0.25);   /* Amber border */
+
+  /* Text */
+  --parchment: #F5ECD6;   /* Primary text — all headlines and body */
+  --stone:     #9A8A6E;   /* Secondary text — subtitles, descriptions */
+  --muted:     #5C4E38;   /* Tertiary text — labels, metadata */
+
+  /* Semantic */
+  --positive:  #2DC275;   /* Upward delta, success states */
+  --alert:     #F0383A;   /* Expiry warnings only */
+
+  /* Fonts */
+  --serif:     'DM Serif Display', serif;   /* Headlines, dollar values */
+  --sans:      'DM Sans', sans-serif;       /* All body copy and UI text */
+
+  /* Gradient strip — runs across top of nav and cards */
+  --strip:     linear-gradient(90deg, #7B5CF0, #E8A230);
+
+  /* Border radius */
+  --r-sm:  4px;
+  --r-md:  8px;
+  --r-lg:  12px;
+  --r-xl:  16px;
+  --r-pill: 100px;
+
+  /* Spacing scale */
+  --sp-xs:  4px;
+  --sp-sm:  8px;
+  --sp-md:  16px;
+  --sp-lg:  24px;
+  --sp-xl:  32px;
+  --sp-2xl: 48px;
+}
+
+
+/* ── 2. RESET & BASE ──────────────────────────────────────────
+   ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:   var(--bg);
+  color:        var(--parchment);
+  font-family:  var(--sans);
+  font-weight:  300;
+  min-height:   100vh;
+  overflow-x:   hidden;
+  line-height:  1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+/* ── 3. GRADIENT STRIP ───────────────────────────────────────
+   The 3px violet→amber line that runs across the very top.
+   ─────────────────────────────────────────────────────────── */
+.strip {
+  height:     3px;
+  width:      100%;
+  background: var(--strip);
+  position:   fixed;
+  top:        0;
+  left:       0;
+  z-index:    200;
+}
+
+
+/* ── 4. NAVIGATION ────────────────────────────────────────────
+   ─────────────────────────────────────────────────────────── */
+nav {
+  position:           fixed;
+  top:                3px;   /* sits below the gradient strip */
+  left:               0;
+  right:              0;
+  z-index:            100;
+  background:         rgba(28, 18, 8, 0.95);
+  backdrop-filter:    blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom:      0.5px solid var(--border);
+  padding:            14px 24px;
+  display:            flex;
+  align-items:        center;
+  justify-content:    space-between;
+}
+
+.nav-logo {
+  font-family: var(--serif);
+  font-size:   20px;
+  color:       var(--parchment);
+}
+.nav-logo em {
+  color:       var(--violet);
+  font-style:  italic;
+}
+
+.nav-pill {
+  font-size:        10px;
+  font-weight:      600;
+  letter-spacing:   0.1em;
+  text-transform:   uppercase;
+  color:            var(--violet);
+  background:       var(--vs);
+  border:           0.5px solid var(--vb);
+  border-radius:    var(--r-pill);
+  padding:          4px 12px;
+}
+
+
+/* ── 5. PAGE LAYOUT ───────────────────────────────────────────
+   ─────────────────────────────────────────────────────────── */
+.page {
+  max-width: 1080px;
+  margin:    0 auto;
+  padding:   88px 24px 64px;
+}
+
+
+/* ── 6. HERO SECTION ──────────────────────────────────────────
+   Two-column grid: value proposition left, form right.
+   ─────────────────────────────────────────────────────────── */
+.hero {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   56px;
+  align-items:           start;
+  margin-bottom:         72px;
+}
+
+.eyebrow {
+  font-size:       10px;
+  font-weight:     600;
+  letter-spacing:  0.12em;
+  text-transform:  uppercase;
+  color:           var(--amber);
+  margin-bottom:   18px;
+  display:         flex;
+  align-items:     center;
+  gap:             8px;
+}
+.eyebrow::before {
+  content:       '';
+  display:       inline-block;
+  width:         20px;
+  height:        2px;
+  background:    var(--amber);
+  border-radius: 1px;
+  flex-shrink:   0;
+}
+
+.hero-headline {
+  font-family:  var(--serif);
+  font-size:    clamp(34px, 4.5vw, 52px);
+  line-height:  1.05;
+  margin-bottom: 20px;
+}
+.hero-headline .hl-violet { color: var(--violet); font-style: italic; }
+.hero-headline .hl-amber  { color: var(--amber);  font-style: italic; }
+
+.hero-sub {
+  font-size:     15px;
+  color:         var(--stone);
+  line-height:   1.75;
+  margin-bottom: 28px;
+}
+.hero-sub strong {
+  color:        var(--parchment);
+  font-weight:  500;
+}
+
+
+/* ── 7. STATS BAR ────────────────────────────────────────────
+   ─────────────────────────────────────────────────────────── */
+.stats {
+  display:       flex;
+  gap:           0;
+  border:        0.5px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow:      hidden;
+  margin-bottom: 28px;
+}
+
+.stat {
+  flex:         1;
+  padding:      16px 18px;
+  border-right: 0.5px solid var(--border);
+}
+.stat:last-child { border-right: none; }
+
+.stat-number {
+  font-family:  var(--serif);
+  font-size:    28px;
+  color:        var(--violet);
+  line-height:  1;
+}
+.stat-number.amber { color: var(--amber); }
+
+.stat-label {
+  font-size:       10px;
+  color:           var(--muted);
+  text-transform:  uppercase;
+  letter-spacing:  0.08em;
+  margin-top:      4px;
+}
+
+
+/* ── 8. PROGRAM CHIPS (hero) ─────────────────────────────────
+   Small pill badges showing which programs Pointr covers.
+   ─────────────────────────────────────────────────────────── */
+.prog-row {
+  display:     flex;
+  flex-wrap:   wrap;
+  gap:         8px;
+  margin-bottom: 28px;
+}
+
+.prog-chip {
+  display:       flex;
+  align-items:   center;
+  gap:           6px;
+  padding:       5px 12px;
+  background:    var(--surface);
+  border:        0.5px solid var(--border);
+  border-radius: var(--r-pill);
+  font-size:     11px;
+  color:         var(--stone);
+  transition:    border-color 0.2s;
+}
+.prog-chip:hover { border-color: var(--vb); }
+
+.dot {
+  width:        7px;
+  height:       7px;
+  border-radius: 50%;
+  flex-shrink:  0;
+}
+
+
+/* ── 9. FORM CARD ────────────────────────────────────────────
+   The main registration card on the right side.
+   ─────────────────────────────────────────────────────────── */
+.form-card {
+  background:    var(--card);
+  border:        0.5px solid var(--border);
+  border-radius: var(--r-xl);
+  padding:       32px 28px;
+  position:      relative;
+  overflow:      hidden;
+}
+
+/* Gradient strip at top of card */
+.form-card::before {
+  content:    '';
+  position:   absolute;
+  top:        0;
+  left:       0;
+  right:      0;
+  height:     3px;
+  background: var(--strip);
+}
+
+/* L-bracket corner mark */
+.corner {
+  position:      absolute;
+  top:           14px;
+  left:          14px;
+  width:         24px;
+  height:        24px;
+  border-top:    2px solid var(--violet);
+  border-left:   2px solid var(--violet);
+  border-radius: 3px 0 0 0;
+}
+
+.form-title {
+  font-family:   var(--serif);
+  font-size:     24px;
+  margin-bottom: 5px;
+  padding-top:   6px;
+}
+.form-title em {
+  color:       var(--violet);
+  font-style:  italic;
+}
+
+.form-desc {
+  font-size:     13px;
+  color:         var(--stone);
+  margin-bottom: 22px;
+  line-height:   1.6;
+}
+
+.divider {
+  height:     0.5px;
+  background: var(--border);
+  margin:     20px 0;
+}
+
+.sec-label {
+  font-size:       9px;
+  font-weight:     600;
+  letter-spacing:  0.12em;
+  text-transform:  uppercase;
+  color:           var(--muted);
+  margin-bottom:   12px;
+}
+
+
+/* ── 10. FORM FIELDS ─────────────────────────────────────────
+   All inputs, selects, textareas and their labels.
+   ─────────────────────────────────────────────────────────── */
+.field {
+  margin-bottom: 16px;
+}
+
+.field-row {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   12px;
+  margin-bottom:         16px;
+}
+
+label {
+  display:         block;
+  font-size:       10px;
+  font-weight:     600;
+  letter-spacing:  0.1em;
+  text-transform:  uppercase;
+  color:           var(--muted);
+  margin-bottom:   6px;
+}
+
+label .req {
+  color:       var(--violet);
+  margin-left: 2px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width:        100%;
+  background:   var(--surface);
+  border:       0.5px solid var(--border);
+  border-radius: var(--r-md);
+  padding:      11px 14px;
+  font-family:  var(--sans);
+  font-size:    13px;
+  font-weight:  300;
+  color:        var(--parchment);
+  outline:      none;
+  transition:   border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+  appearance:   none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--vb);
+  box-shadow:   0 0 0 3px rgba(123, 92, 240, 0.08);
+}
+
+textarea {
+  resize:     vertical;
+  min-height: 80px;
+  line-height: 1.6;
+}
+
+/* Validation error state */
+input.error {
+  border-color: var(--alert);
+  box-shadow:   0 0 0 3px rgba(240, 56, 58, 0.08);
+}
+
+.error-msg {
+  font-size:   11px;
+  color:       var(--alert);
+  margin-top:  5px;
+  display:     none;
+}
+.error-msg.show { display: block; }
+
+
+/* ── 11. PROGRAM CHECKBOXES ──────────────────────────────────
+   Multi-select grid for loyalty programs.
+   ─────────────────────────────────────────────────────────── */
+.cb-grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   8px;
+}
+
+.cb-item {
+  display:     flex;
+  align-items: center;
+  gap:         9px;
+  padding:     10px 12px;
+  background:  var(--surface);
+  border:      0.5px solid var(--border);
+  border-radius: var(--r-md);
+  cursor:      pointer;
+  transition:  border-color 0.2s, background 0.2s;
+  user-select: none;
+}
+.cb-item:hover {
+  border-color: var(--vb);
+  background:   rgba(123, 92, 240, 0.04);
+}
+.cb-item.checked {
+  border-color: var(--vb);
+  background:   var(--vs);
+}
+
+.cb-item input[type="checkbox"] {
+  width:      15px;
+  height:     15px;
+  accent-color: var(--violet);
+  cursor:     pointer;
+  flex-shrink: 0;
+  margin:     0;
+  padding:    0;
+}
+
+.cb-text {
+  font-size:  12px;
+  color:      var(--stone);
+  display:    flex;
+  align-items: center;
+  gap:        6px;
+  transition: color 0.2s;
+  line-height: 1.3;
+}
+.cb-item.checked .cb-text { color: var(--parchment); }
+
+
+/* ── 12. FRUSTRATION PILLS ───────────────────────────────────
+   Single-choice options for the frustration question.
+   ─────────────────────────────────────────────────────────── */
+.pill-grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   8px;
+}
+
+.pill-opt {
+  padding:       10px 12px;
+  background:    var(--surface);
+  border:        0.5px solid var(--border);
+  border-radius: var(--r-md);
+  font-size:     12px;
+  color:         var(--stone);
+  cursor:        pointer;
+  transition:    all 0.2s;
+  text-align:    center;
+  user-select:   none;
+  line-height:   1.4;
+}
+.pill-opt:hover {
+  border-color: var(--vb);
+  color:        var(--parchment);
+}
+.pill-opt.sel {
+  background:   var(--vs);
+  border-color: var(--vb);
+  color:        var(--violet);
+  font-weight:  500;
+}
+
+.other-textarea-wrap {
+  display:    none;
+  margin-top: 10px;
+}
+.other-textarea-wrap.show { display: block; }
+
+
+/* ── 13. PRICE OPTIONS ───────────────────────────────────────
+   Tappable price cards for the willingness-to-pay question.
+   ─────────────────────────────────────────────────────────── */
+.price-grid {
+  display:               grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap:                   8px;
+}
+
+.price-opt {
+  padding:       12px 6px;
+  background:    var(--surface);
+  border:        0.5px solid var(--border);
+  border-radius: var(--r-md);
+  font-size:     14px;
+  font-family:   var(--serif);
+  color:         var(--stone);
+  cursor:        pointer;
+  transition:    all 0.2s;
+  text-align:    center;
+  user-select:   none;
+}
+.price-opt .price-sub {
+  display:     block;
+  font-family: var(--sans);
+  font-size:   9px;
+  color:       var(--muted);
+  margin-top:  4px;
+  font-weight: 300;
+  line-height: 1.3;
+}
+.price-opt:hover {
+  border-color: var(--vb);
+  color:        var(--parchment);
+}
+.price-opt.sel {
+  background:   var(--vs);
+  border-color: var(--violet);
+  color:        var(--violet);
+}
+.price-opt.sel .price-sub { color: var(--lavender, #B8A8D8); }
+
+
+/* ── 14. PROGRESSIVE FORM REVEAL ────────────────────────────
+   The second group of fields that slides in after 1-3 are filled.
+   ─────────────────────────────────────────────────────────── */
+.form-group-2 {
+  overflow:   hidden;
+  max-height: 0;
+  opacity:    0;
+  transition: max-height 0.5s ease, opacity 0.4s ease;
+}
+.form-group-2.revealed {
+  max-height: 2000px;  /* large enough for content */
+  opacity:    1;
+}
+/* When formMode is "all", this class is added by script.js */
+.form-group-2.show-all {
+  max-height: 2000px;
+  opacity:    1;
+  transition: none;
+}
+
+
+/* ── 15. INCENTIVE BANNER ────────────────────────────────────
+   The "lifetime free access" banner above the form.
+   ─────────────────────────────────────────────────────────── */
+.incentive {
+  background:    var(--as);
+  border:        0.5px solid var(--ab);
+  border-radius: var(--r-md);
+  padding:       14px 16px;
+  margin-bottom: 20px;
+  display:       flex;
+  gap:           10px;
+  align-items:   flex-start;
+}
+
+.inc-icon {
+  font-size:  20px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.inc-title {
+  font-size:   13px;
+  font-weight: 500;
+  color:       var(--amber);
+  margin-bottom: 3px;
+}
+.inc-desc {
+  font-size:   12px;
+  color:       var(--stone);
+  line-height: 1.5;
+}
+
+
+/* ── 16. SUBMIT BUTTON & NOTES ───────────────────────────────
+   ─────────────────────────────────────────────────────────── */
+.btn-primary {
+  width:          100%;
+  background:     var(--violet);
+  color:          #ffffff;
+  border:         none;
+  border-radius:  var(--r-md);
+  padding:        14px;
+  font-family:    var(--sans);
+  font-size:      13px;
+  font-weight:    600;
+  letter-spacing: 0.04em;
+  cursor:         pointer;
+  transition:     opacity 0.2s, transform 0.15s;
+  margin-top:     8px;
+}
+.btn-primary:hover  { opacity: 0.9; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.submit-note {
+  font-size:   10px;
+  color:       var(--muted);
+  text-align:  center;
+  margin-top:  12px;
+  line-height: 1.6;
+}
+
+
+/* ── 17. SOCIAL PROOF ────────────────────────────────────────
+   Small credibility row below the submit button.
+   ─────────────────────────────────────────────────────────── */
+.proof {
+  display:      flex;
+  flex-wrap:    wrap;
+  gap:          16px;
+  margin-top:   20px;
+  padding-top:  16px;
+  border-top:   0.5px solid var(--border);
+}
+
+.proof-item {
+  display:     flex;
+  align-items: center;
+  gap:         6px;
+  font-size:   11px;
+  color:       var(--muted);
+}
+
+.proof-dot {
+  width:         5px;
+  height:        5px;
+  border-radius: 50%;
+  background:    var(--positive);
+  flex-shrink:   0;
+}
+
+
+/* ── 18. SUCCESS STATE ───────────────────────────────────────
+   Replaces the form after successful submission.
+   ─────────────────────────────────────────────────────────── */
+.success-state {
+  display:    none;
+  text-align: center;
+  padding:    40px 16px;
+}
+.success-state.show { display: block; }
+
+.suc-icon {
+  width:         56px;
+  height:        56px;
+  background:    rgba(45, 194, 117, 0.12);
+  border:        0.5px solid rgba(45, 194, 117, 0.3);
+  border-radius: 50%;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  margin:        0 auto 20px;
+  font-size:     24px;
+  color:         var(--positive);
+}
+
+.suc-title {
+  font-family:   var(--serif);
+  font-size:     26px;
+  margin-bottom: 10px;
+}
+
+.suc-sub {
+  font-size:   13px;
+  color:       var(--stone);
+  line-height: 1.7;
+}
+.suc-sub strong { color: var(--violet); }
+
+
+/* ── 19. FEATURES SECTION ────────────────────────────────────
+   3-column grid of feature cards below the hero.
+   ─────────────────────────────────────────────────────────── */
+.features {
+  margin-bottom: 64px;
+}
+
+.section-head {
+  text-align:    center;
+  margin-bottom: 40px;
+}
+.section-head h2 {
+  font-family:   var(--serif);
+  font-size:     clamp(26px, 3.5vw, 36px);
+  margin-bottom: 8px;
+}
+.section-head h2 em {
+  color:       var(--violet);
+  font-style:  italic;
+}
+.section-head p {
+  font-size: 14px;
+  color:     var(--stone);
+}
+
+.feat-grid {
+  display:               grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:                   12px;
+}
+
+.feat-card {
+  background:    var(--card);
+  border:        0.5px solid var(--border);
+  border-radius: var(--r-lg);
+  padding:       22px 18px;
+  transition:    border-color 0.2s;
+}
+.feat-card:hover { border-color: var(--vb); }
+
+.feat-icon {
+  width:         34px;
+  height:        34px;
+  background:    var(--vs);
+  border:        0.5px solid var(--vb);
+  border-radius: var(--r-md);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  font-size:     15px;
+  margin-bottom: 12px;
+}
+.feat-icon.amber {
+  background:   var(--as);
+  border-color: var(--ab);
+}
+
+.feat-name {
+  font-family:   var(--serif);
+  font-size:     17px;
+  margin-bottom: 6px;
+}
+
+.feat-desc {
+  font-size:   12px;
+  color:       var(--stone);
+  line-height: 1.7;
+}
+
+
+/* ── 20. PRIVACY NOTICE ──────────────────────────────────────
+   Legal text at the bottom of the page.
+   ─────────────────────────────────────────────────────────── */
+.privacy-notice {
+  background:    var(--surface);
+  border:        0.5px solid var(--border);
+  border-radius: var(--r-md);
+  padding:       16px 18px;
+  margin-bottom: 56px;
+}
+
+.priv-title {
+  font-size:       11px;
+  font-weight:     600;
+  color:           var(--stone);
+  margin-bottom:   6px;
+  text-transform:  uppercase;
+  letter-spacing:  0.08em;
+}
+
+.priv-text {
+  font-size:   11px;
+  color:       var(--muted);
+  line-height: 1.7;
+}
+.priv-text a { color: var(--violet); text-decoration: none; }
+.priv-text strong { color: var(--stone); font-weight: 500; }
+
+
+/* ── 21. FOOTER ──────────────────────────────────────────────
+   ─────────────────────────────────────────────────────────── */
+footer {
+  border-top:    0.5px solid var(--border);
+  padding:       28px 24px;
+  max-width:     1080px;
+  margin:        0 auto;
+  display:       flex;
+  justify-content: space-between;
+  align-items:   center;
+  gap:           16px;
+  flex-wrap:     wrap;
+}
+
+.ft-logo {
+  font-family: var(--serif);
+  font-size:   18px;
+}
+.ft-logo em {
+  color:       var(--violet);
+  font-style:  italic;
+}
+
+.ft-note {
+  font-size:   10px;
+  color:       var(--muted);
+  line-height: 1.6;
+  max-width:   480px;
+}
+
+
+/* ── 22. ANIMATIONS ──────────────────────────────────────────
+   Page load fade-up on hero elements.
+   ─────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero > *:first-child { animation: fadeUp 0.6s ease both; }
+.hero > *:last-child  { animation: fadeUp 0.6s ease 0.15s both; }
+.features             { animation: fadeUp 0.6s ease 0.25s both; }
+
+
+/* ── 23. RESPONSIVE ──────────────────────────────────────────
+   Mobile-first adjustments.
+   ─────────────────────────────────────────────────────────── */
+
+/* Tablet and below */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap:                   36px;
+  }
+  .feat-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Mobile */
+@media (max-width: 540px) {
+  .page {
+    padding: 76px 16px 48px;
+  }
+  nav {
+    padding: 12px 16px;
+  }
+  .form-card {
+    padding: 24px 18px;
+  }
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+  .cb-grid {
+    grid-template-columns: 1fr;
+  }
+  .pill-grid {
+    grid-template-columns: 1fr;
+  }
+  .price-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .feat-grid {
+    grid-template-columns: 1fr;
+  }
+  footer {
+    flex-direction: column;
+    align-items:    flex-start;
+    padding:        20px 16px;
+  }
+  .proof {
+    gap: 12px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+  .price-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stats {
+    flex-direction: column;
+  }
+  .stat {
+    border-right:  none;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .stat:last-child { border-bottom: none; }
+}

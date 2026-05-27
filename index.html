@@ -1,719 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pointr — Know what your points are worth</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-:root{
-  --bg:#1C1208;
-  --surface:#221609;
-  --card:#2A1C0C;
-  --border:#3A2910;
-  --violet:#7B5CF0;
-  --vs:rgba(123,92,240,0.15);
-  --vb:rgba(123,92,240,0.3);
-  --amber:#E8A230;
-  --as:rgba(232,162,48,0.10);
-  --ab:rgba(232,162,48,0.25);
-  --parchment:#F5ECD6;
-  --stone:#9A8A6E;
-  --muted:#5C4E38;
-  --positive:#2DC275;
-  --alert:#F0383A;
-  --serif:'DM Serif Display',serif;
-  --sans:'DM Sans',sans-serif;
-  --strip:linear-gradient(90deg,#7B5CF0,#E8A230);
-}
+  <!-- Page title is set by script.js from content.js -->
+  <title>Pointr</title>
 
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--parchment);font-family:var(--sans);font-weight:300;min-height:100vh;overflow-x:hidden}
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-/* ── GRADIENT STRIP ── */
-.strip{height:3px;width:100%;background:var(--strip);position:fixed;top:0;left:0;z-index:200}
-
-/* ── NAV ── */
-nav{position:fixed;top:3px;left:0;right:0;z-index:100;background:rgba(28,18,8,0.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:.5px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:var(--serif);font-size:20px;color:var(--parchment)}
-.nav-logo em{color:var(--violet);font-style:italic}
-.nav-pill{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--violet);background:var(--vs);border:.5px solid var(--vb);border-radius:100px;padding:4px 12px}
-
-/* ── LAYOUT ── */
-.page{max-width:1080px;margin:0 auto;padding:80px 24px 64px}
-
-/* ── HERO SECTION ── */
-.hero{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-bottom:72px}
-@media(max-width:720px){.hero{grid-template-columns:1fr;gap:40px}}
-
-.eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:18px;display:flex;align-items:center;gap:8px}
-.eyebrow::before{content:'';display:inline-block;width:20px;height:2px;background:var(--amber);border-radius:1px;flex-shrink:0}
-
-h1{font-family:var(--serif);font-size:clamp(36px,5vw,52px);line-height:1.05;margin-bottom:20px}
-h1 em{color:var(--violet);font-style:italic}
-h1 .a{color:var(--amber);font-style:italic}
-
-.hero-sub{font-size:15px;color:var(--stone);line-height:1.75;margin-bottom:28px}
-.hero-sub strong{color:var(--parchment);font-weight:500}
-
-/* programs */
-.prog-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
-.prog-chip{display:flex;align-items:center;gap:6px;padding:5px 12px;background:var(--surface);border:.5px solid var(--border);border-radius:100px;font-size:11px;color:var(--stone);transition:border-color .2s}
-.prog-chip:hover{border-color:var(--vb)}
-.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-
-/* stats */
-.stats{display:flex;gap:0;border:.5px solid var(--border);border-radius:12px;overflow:hidden}
-.stat{flex:1;padding:16px 18px;border-right:.5px solid var(--border)}
-.stat:last-child{border-right:none}
-.stat-n{font-family:var(--serif);font-size:28px;color:var(--violet);line-height:1}
-.stat-n.a{color:var(--amber)}
-.stat-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
-
-/* ── FORM CARD ── */
-.form-wrap{position:relative}
-.form-card{background:var(--card);border:.5px solid var(--border);border-radius:16px;padding:32px 28px;position:relative;overflow:hidden}
-.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--strip)}
-.corner{position:absolute;top:14px;left:14px;width:24px;height:24px;border-top:2px solid var(--violet);border-left:2px solid var(--violet);border-radius:3px 0 0 0}
-
-.form-title{font-family:var(--serif);font-size:24px;margin-bottom:5px;padding-top:6px}
-.form-title em{color:var(--violet);font-style:italic}
-.form-desc{font-size:13px;color:var(--stone);margin-bottom:24px;line-height:1.6}
-
-/* step indicator */
-.steps{display:flex;align-items:center;gap:0;margin-bottom:24px}
-.step-dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;border:.5px solid var(--border);color:var(--muted);background:var(--surface);flex-shrink:0;transition:all .3s}
-.step-dot.active{background:var(--violet);border-color:var(--violet);color:#fff}
-.step-dot.done{background:var(--vs);border-color:var(--vb);color:var(--violet)}
-.step-line{flex:1;height:.5px;background:var(--border)}
-
-/* fields */
-.field{margin-bottom:16px}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-@media(max-width:480px){.field-row{grid-template-columns:1fr}}
-
-label{display:block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-label .req{color:var(--violet);margin-left:2px}
-
-input[type=text],input[type=email],select{width:100%;background:var(--surface);border:.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:var(--sans);font-size:13px;font-weight:300;color:var(--parchment);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}
-input::placeholder{color:var(--muted)}
-input:focus,select:focus{border-color:var(--vb);box-shadow:0 0 0 3px rgba(123,92,240,.08)}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235C4E38' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
-select option{background:var(--card);color:var(--parchment)}
-
-/* checkbox grid */
-.cb-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-@media(max-width:380px){.cb-grid{grid-template-columns:1fr}}
-
-.cb-item{display:flex;align-items:center;gap:9px;padding:10px 12px;background:var(--surface);border:.5px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .2s,background .2s;user-select:none}
-.cb-item:hover{border-color:var(--vb);background:rgba(123,92,240,.04)}
-.cb-item input[type=checkbox]{width:15px;height:15px;accent-color:var(--violet);cursor:pointer;flex-shrink:0;margin:0;padding:0}
-.cb-text{font-size:12px;color:var(--stone);display:flex;align-items:center;gap:6px;transition:color .2s}
-.cb-item input:checked~.cb-text{color:var(--parchment)}
-
-/* divider */
-.divider{height:.5px;background:var(--border);margin:20px 0}
-.sec-label{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-
-/* ── POINTS CALCULATOR ── */
-.calc-section{margin-top:4px}
-.calc-program{background:var(--surface);border:.5px solid var(--border);border-radius:10px;padding:14px;margin-bottom:8px;transition:border-color .2s}
-.calc-program.has-value{border-color:var(--vb)}
-.calc-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.calc-name{font-size:13px;font-weight:500;color:var(--parchment);flex:1}
-.calc-input{width:120px;padding:7px 10px;font-size:13px;text-align:right}
-
-/* value reveal */
-.value-reveal{display:none;margin-top:12px;padding-top:12px;border-top:.5px solid var(--border)}
-.calc-program.has-value .value-reveal{display:block}
-.val-row{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0}
-.val-label{font-size:11px;color:var(--stone)}
-.val-num{font-family:var(--serif);font-size:16px}
-.val-num.best{color:var(--violet);font-size:22px}
-.val-note{font-size:10px;color:var(--muted)}
-.val-bar{height:3px;border-radius:2px;margin:8px 0;background:var(--border);overflow:hidden}
-.val-fill{height:100%;border-radius:2px;background:var(--strip)}
-
-/* total banner */
-.total-banner{display:none;background:var(--vs);border:.5px solid var(--vb);border-radius:10px;padding:14px 16px;margin-top:12px;text-align:center}
-.total-banner.show{display:block}
-.total-label{font-size:10px;color:var(--violet);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
-.total-value{font-family:var(--serif);font-size:36px;color:var(--violet)}
-.total-sub{font-size:11px;color:var(--stone);margin-top:4px}
-
-/* frustration pills */
-.pill-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-@media(max-width:380px){.pill-grid{grid-template-columns:1fr}}
-.pill-opt{padding:10px 12px;background:var(--surface);border:.5px solid var(--border);border-radius:8px;font-size:12px;color:var(--stone);cursor:pointer;transition:all .2s;text-align:center;user-select:none}
-.pill-opt:hover{border-color:var(--vb);color:var(--parchment)}
-.pill-opt.sel{background:var(--vs);border-color:var(--vb);color:var(--violet);font-weight:500}
-
-/* pay toggle */
-.toggle-wrap{display:flex;gap:8px}
-.tog{flex:1;padding:11px;border-radius:8px;font-size:13px;font-weight:500;background:var(--surface);border:.5px solid var(--border);color:var(--stone);cursor:pointer;transition:all .2s;text-align:center;user-select:none}
-.tog:hover{border-color:var(--vb);color:var(--parchment)}
-.tog.yes.sel{background:var(--vs);border-color:var(--vb);color:var(--violet)}
-.tog.no.sel{background:rgba(240,56,58,.1);border-color:rgba(240,56,58,.3);color:var(--alert)}
-
-.no-followup{display:none;margin-top:10px}
-.no-followup.show{display:block}
-.no-followup input{margin-top:6px}
-
-/* incentive banner */
-.incentive{background:var(--as);border:.5px solid var(--ab);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start}
-.inc-icon{font-size:20px;flex-shrink:0;margin-top:1px}
-.inc-title{font-size:13px;font-weight:500;color:var(--amber);margin-bottom:3px}
-.inc-desc{font-size:12px;color:var(--stone);line-height:1.5}
-
-/* buttons */
-.btn-primary{width:100%;background:var(--violet);color:#fff;border:none;border-radius:8px;padding:14px;font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:opacity .2s,transform .15s;margin-top:8px}
-.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
-.btn-primary:active{transform:translateY(0)}
-.btn-ghost{width:100%;background:transparent;color:var(--stone);border:.5px solid var(--border);border-radius:8px;padding:11px;font-family:var(--sans);font-size:12px;cursor:pointer;transition:all .2s;margin-top:8px}
-.btn-ghost:hover{border-color:var(--vb);color:var(--violet)}
-
-.submit-note{font-size:10px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6}
-
-/* proof */
-.proof{display:flex;flex-wrap:wrap;gap:16px;margin-top:20px;padding-top:16px;border-top:.5px solid var(--border)}
-.proof-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
-.proof-dot{width:5px;height:5px;border-radius:50%;background:var(--positive);flex-shrink:0}
-
-/* ── SUCCESS STATE ── */
-.success{display:none;text-align:center;padding:40px 16px}
-.success.show{display:block}
-.suc-icon{width:56px;height:56px;background:rgba(45,194,117,.12);border:.5px solid rgba(45,194,117,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:24px}
-.suc-title{font-family:var(--serif);font-size:26px;margin-bottom:10px}
-.suc-sub{font-size:13px;color:var(--stone);line-height:1.7}
-.suc-sub strong{color:var(--violet)}
-
-/* ── FEATURES ── */
-.features{margin-bottom:72px}
-.section-head{text-align:center;margin-bottom:40px}
-.section-head h2{font-family:var(--serif);font-size:clamp(28px,4vw,38px);margin-bottom:8px}
-.section-head h2 em{color:var(--violet);font-style:italic}
-.section-head p{font-size:14px;color:var(--stone)}
-
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-@media(max-width:640px){.feat-grid{grid-template-columns:1fr}}
-
-.feat-card{background:var(--card);border:.5px solid var(--border);border-radius:12px;padding:22px 18px;transition:border-color .2s}
-.feat-card:hover{border-color:var(--vb)}
-.feat-icon{width:34px;height:34px;background:var(--vs);border:.5px solid var(--vb);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:12px}
-.feat-icon.a{background:var(--as);border-color:var(--ab)}
-.feat-name{font-family:var(--serif);font-size:17px;margin-bottom:6px}
-.feat-desc{font-size:12px;color:var(--stone);line-height:1.7}
-
-/* ── FOOTER ── */
-footer{border-top:.5px solid var(--border);padding:28px 24px;max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.ft-logo{font-family:var(--serif);font-size:18px}
-.ft-logo em{color:var(--violet);font-style:italic}
-.ft-note{font-size:10px;color:var(--muted);line-height:1.6;max-width:480px}
-@media(max-width:600px){footer{flex-direction:column;align-items:flex-start}}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.hero>*:first-child{animation:fadeUp .6s ease both}
-.hero>*:last-child{animation:fadeUp .6s ease .15s both}
-.features{animation:fadeUp .6s ease .25s both}
-
-/* ── PRIVACY NOTICE ── */
-.privacy-notice{background:var(--surface);border:.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:64px}
-.priv-title{font-size:11px;font-weight:600;color:var(--stone);margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em}
-.priv-text{font-size:11px;color:var(--muted);line-height:1.7}
-.priv-text a{color:var(--violet);text-decoration:none}
-</style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="strip"></div>
+  <!-- ============================================================
+       GRADIENT STRIP
+       The 3px violet→amber line fixed to the very top of the page.
+  ============================================================ -->
+  <div class="strip"></div>
 
-<nav>
-  <div class="nav-logo">Po<em>i</em>ntr</div>
-  <div class="nav-pill">Early Access</div>
-</nav>
 
-<div class="page">
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav>
+    <div class="nav-logo" id="nav-logo-text"></div>
+    <div class="nav-pill" id="nav-pill-text"></div>
+  </nav>
 
-  <!-- ── HERO ── -->
-  <div class="hero">
 
-    <!-- Left -->
-    <div>
-      <div class="eyebrow">Australian loyalty points — decoded</div>
-      <h1>Your points.<br><em>Real dollar</em><br><span class="a">value.</span></h1>
-      <p class="hero-sub">
-        I bought a house in Melbourne and felt every dollar. Then I found
-        <strong>$3,511 in forgotten points</strong> across four programs I never checked.
-        <br><br>
-        It made me create Pointr — a simple way to see what my loyalty points are actually worth — every day, in dollars, not numbers.
-      </p>
+  <!-- ============================================================
+       MAIN PAGE CONTENT
+  ============================================================ -->
+  <div class="page">
 
-      <div class="prog-row">
-        <div class="prog-chip"><div class="dot" style="background:#E8192C"></div>Qantas FF</div>
-        <div class="prog-chip"><div class="dot" style="background:#E8192C"></div>Velocity</div>
-        <div class="prog-chip"><div class="dot" style="background:#FFCC00"></div>Flybuys</div>
-        <div class="prog-chip"><div class="dot" style="background:#00A650"></div>Everyday Rewards</div>
-      </div>
 
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-n">4</div>
-          <div class="stat-l">Programs tracked</div>
-        </div>
-        <div class="stat">
-          <div class="stat-n a">1</div>
-          <div class="stat-l">Daily insight</div>
-        </div>
-        <div class="stat">
-          <div class="stat-n">$0</div>
-          <div class="stat-l">To join waitlist</div>
-        </div>
-      </div>
-    </div>
+    <!-- ── HERO ─────────────────────────────────────────────── -->
+    <div class="hero">
 
-    <!-- Right: form -->
-    <div class="form-wrap">
-      <div class="form-card">
-        <div class="corner"></div>
+      <!-- Left: Value proposition -->
+      <div class="hero-left">
 
-        <!-- STEP 1 -->
-        <div id="step1">
-          <h2 class="form-title">Get <em>early access</em></h2>
-          <p class="form-desc">Join the waitlist. 30 seconds. No card required.</p>
+        <div class="eyebrow" id="eyebrow-text"></div>
 
-          <!-- Incentive -->
-          <div class="incentive">
-            <div class="inc-icon">🎁</div>
-            <div>
-              <div class="inc-title">Waitlist members get lifetime free access</div>
-              <div class="inc-desc">No subscription ever. Full Pointr features — yours permanently as a founding member.</div>
+        <h1 class="hero-headline" id="hero-headline"></h1>
+
+        <p class="hero-sub" id="hero-sub-text"></p>
+
+        <!-- Program chips (built from content.js programs list) -->
+        <div class="prog-row" id="hero-chips"></div>
+
+        <!-- Stats bar -->
+        <div class="stats" id="stats-bar"></div>
+
+      </div><!-- /hero-left -->
+
+
+      <!-- Right: Registration form -->
+      <div class="hero-right">
+        <div class="form-card">
+
+          <!-- Corner mark (brand element — do not remove) -->
+          <div class="corner"></div>
+
+          <!-- Form inner (hidden on success) -->
+          <div id="form-inner">
+
+            <h2 class="form-title" id="form-title"></h2>
+            <p  class="form-desc"  id="form-desc"></p>
+
+            <!-- Incentive banner -->
+            <div class="incentive">
+              <div class="inc-icon"  id="inc-icon"></div>
+              <div>
+                <div class="inc-title" id="inc-title"></div>
+                <div class="inc-desc"  id="inc-desc"></div>
+              </div>
             </div>
+
+            <!-- ════════════════════════════════════════════
+                 GROUP 1: Always visible
+                 Fields: First name, Email
+            ════════════════════════════════════════════ -->
+            <div id="form-group-1">
+
+              <!-- First name -->
+              <div class="field">
+                <label for="firstName">
+                  <span data-label="firstName"></span>
+                  <span class="req">*</span>
+                </label>
+                <input type="text" id="firstName"
+                       autocomplete="given-name"
+                       oninput="onGroup1Change()" required>
+                <div class="error-msg" id="error-firstName">Please enter your first name.</div>
+              </div>
+
+              <!-- Email -->
+              <div class="field">
+                <label for="email">
+                  <span data-label="email"></span>
+                  <span class="req">*</span>
+                </label>
+                <input type="email" id="email"
+                       autocomplete="email"
+                       oninput="onGroup1Change()" required>
+                <div class="error-msg" id="error-email">Please enter a valid email address.</div>
+              </div>
+
+            </div><!-- /form-group-1 -->
+
+
+            <!-- ════════════════════════════════════════════
+                 GROUP 2: Revealed progressively (or all at
+                 once in "all" mode — see config.js)
+                 Fields: Programs, Goals, Frustration, Price
+            ════════════════════════════════════════════ -->
+            <div id="form-group-2" class="form-group-2">
+
+              <div class="divider"></div>
+
+              <!-- Programs — multi-select checkboxes -->
+              <div class="field">
+                <div class="sec-label" id="programs-label"></div>
+                <div class="cb-grid" id="programs-grid">
+                  <!-- Built by script.js from content.js programs array -->
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <!-- Goals — open text -->
+              <div class="field">
+                <label for="goals" id="goals-label"></label>
+                <textarea id="goals" rows="3"></textarea>
+              </div>
+
+              <div class="divider"></div>
+
+              <!-- Frustration — single choice pills -->
+              <div class="field">
+                <div class="sec-label" id="frustrations-label"></div>
+                <div class="pill-grid" id="frustrations-grid">
+                  <!-- Built by script.js from content.js frustrations array -->
+                </div>
+                <!-- "Other" textarea — appears when Other is selected -->
+                <div class="other-textarea-wrap" id="frustration-other-wrap">
+                  <textarea id="frustration-other-text" rows="2"
+                            style="margin-top:8px"></textarea>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <!-- Price — tap to select -->
+              <div class="field">
+                <div class="sec-label" id="price-label"></div>
+                <div class="price-grid" id="price-grid">
+                  <!-- Built by script.js from content.js priceOptions array -->
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <!-- Submit -->
+              <button class="btn-primary" id="submit-btn" onclick="handleSubmit()"></button>
+              <p class="submit-note" id="submit-note"></p>
+
+              <!-- Social proof -->
+              <div class="proof" id="proof-row"></div>
+
+            </div><!-- /form-group-2 -->
+
+          </div><!-- /form-inner -->
+
+
+          <!-- ════════════════════════════════════════════
+               SUCCESS STATE
+               Replaces the form after submission.
+          ════════════════════════════════════════════ -->
+          <div class="success-state" id="success-state">
+            <div class="suc-icon"    id="suc-icon"></div>
+            <h3  class="suc-title"   id="suc-title"></h3>
+            <p   class="suc-sub"     id="suc-message"></p>
           </div>
 
-          <div class="field-row">
-            <div class="field">
-              <label>First name <span class="req">*</span></label>
-              <input type="text" id="s1-first" placeholder="Alex" required>
-            </div>
-            <div class="field">
-              <label>Last name <span class="req">*</span></label>
-              <input type="text" id="s1-last" placeholder="Smith" required>
-            </div>
-          </div>
+        </div><!-- /form-card -->
+      </div><!-- /hero-right -->
 
-          <div class="field">
-            <label>Email address <span class="req">*</span></label>
-            <input type="email" id="s1-email" placeholder="alex@email.com.au" required>
-          </div>
+    </div><!-- /hero -->
 
-          <div class="field">
-            <label>State <span class="req">*</span></label>
-            <select id="s1-state" required>
-              <option value="" disabled selected>Select your state</option>
-              <option>VIC — Victoria</option>
-              <option>NSW — New South Wales</option>
-              <option>QLD — Queensland</option>
-              <option>WA — Western Australia</option>
-              <option>SA — South Australia</option>
-              <option>TAS — Tasmania</option>
-              <option>ACT</option>
-              <option>NT — Northern Territory</option>
-            </select>
-          </div>
 
-          <button class="btn-primary" onclick="goStep2()">Continue → Tell us about your points</button>
-
-          <div class="proof">
-            <div class="proof-item"><div class="proof-dot"></div>Australian-built</div>
-            <div class="proof-item"><div class="proof-dot"></div>Free to join</div>
-            <div class="proof-item"><div class="proof-dot"></div>No card required</div>
-          </div>
-        </div>
-
-        <!-- STEP 2 -->
-        <div id="step2" style="display:none">
-
-          <!-- Step indicator -->
-          <div class="steps" style="margin-bottom:20px">
-            <div class="step-dot done">✓</div>
-            <div class="step-line"></div>
-            <div class="step-dot active">2</div>
-            <div class="step-line"></div>
-            <div class="step-dot">3</div>
-          </div>
-
-          <h2 class="form-title" style="margin-bottom:4px">Your <em>points</em> world</h2>
-          <p class="form-desc">Optional — but helps us build what matters to you first.</p>
-
-          <!-- Programs checklist -->
-          <div class="sec-label">Programs you're in</div>
-          <div class="cb-grid" style="margin-bottom:20px">
-            <label class="cb-item">
-              <input type="checkbox" name="prog" value="qantas" onchange="updateCalc()">
-              <span class="cb-text"><span class="dot" style="background:#E8192C"></span>Qantas FF</span>
-            </label>
-            <label class="cb-item">
-              <input type="checkbox" name="prog" value="velocity" onchange="updateCalc()">
-              <span class="cb-text"><span class="dot" style="background:#E8192C"></span>Velocity</span>
-            </label>
-            <label class="cb-item">
-              <input type="checkbox" name="prog" value="flybuys" onchange="updateCalc()">
-              <span class="cb-text"><span class="dot" style="background:#FFCC00"></span>Flybuys</span>
-            </label>
-            <label class="cb-item">
-              <input type="checkbox" name="prog" value="everyday" onchange="updateCalc()">
-              <span class="cb-text"><span class="dot" style="background:#00A650"></span>Everyday Rewards</span>
-            </label>
-          </div>
-
-          <!-- Live calculator -->
-          <div class="divider"></div>
-          <div class="sec-label">Enter your points — see their dollar value instantly</div>
-
-          <div class="calc-section" id="calcArea">
-            <p style="font-size:12px;color:var(--muted)">Select your programs above to enter your points.</p>
-          </div>
-
-          <!-- Total banner -->
-          <div class="total-banner" id="totalBanner">
-            <div class="total-label">Your estimated total portfolio</div>
-            <div class="total-value" id="totalValue">$0</div>
-            <div class="total-sub" id="totalSub">Based on midpoint redemption value · <em>Not financial advice</em></div>
-          </div>
-
-          <div class="divider"></div>
-          <button class="btn-ghost" onclick="goStep3()">Continue → Almost done →</button>
-        </div>
-
-        <!-- STEP 3 -->
-        <div id="step3" style="display:none">
-
-          <div class="steps" style="margin-bottom:20px">
-            <div class="step-dot done">✓</div>
-            <div class="step-line"></div>
-            <div class="step-dot done">✓</div>
-            <div class="step-line"></div>
-            <div class="step-dot active">3</div>
-          </div>
-
-          <h2 class="form-title" style="margin-bottom:4px">Last <em>few things</em></h2>
-          <p class="form-desc">Helps us build Pointr around what you actually need.</p>
-
-          <!-- Frustration -->
-          <div class="sec-label">What frustrates you most about your points?</div>
-          <div class="pill-grid" style="margin-bottom:20px" id="frustGrid">
-            <div class="pill-opt" onclick="selFrust(this,'expiry')">Points expiring</div>
-            <div class="pill-opt" onclick="selFrust(this,'value')">Not knowing dollar value</div>
-            <div class="pill-opt" onclick="selFrust(this,'logins')">Too many apps/logins</div>
-            <div class="pill-opt" onclick="selFrust(this,'redeem')">Hard to transfer/redeem</div>
-          </div>
-          <input type="hidden" id="frustVal">
-
-          <!-- Pay toggle -->
-          <div class="divider"></div>
-          <div class="sec-label">Would you pay $9.99/month for Pointr?</div>
-          <div class="toggle-wrap" style="margin-bottom:8px">
-            <div class="tog yes" onclick="setTog(this,'yes')">Yes — definitely</div>
-            <div class="tog no"  onclick="setTog(this,'no')">Not sure / No</div>
-          </div>
-          <input type="hidden" id="payVal">
-
-          <div class="no-followup" id="noFollowup">
-            <label>What would make it worth it to you?</label>
-            <input type="text" id="noReason" placeholder="e.g. if it also tracked my credit card points…">
-          </div>
-
-          <!-- Source -->
-          <div class="divider"></div>
-          <div class="field">
-            <label>How did you hear about Pointr?</label>
-            <select id="sourceVal">
-              <option value="" disabled selected>Select one (optional)</option>
-              <option value="instagram">Instagram</option>
-              <option value="tiktok">TikTok</option>
-              <option value="friend">Friend or family</option>
-              <option value="google">Google search</option>
-              <option value="linkedin">LinkedIn</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-
-          <button class="btn-primary" onclick="handleSubmit()">🎁 Claim my lifetime free access</button>
-          <p class="submit-note">Your data is handled under Australian Privacy Act 1988. We never sell or share your information.</p>
-        </div>
-
-        <!-- SUCCESS -->
-        <div class="success" id="successState">
-          <div class="suc-icon">✓</div>
-          <h3 class="suc-title">You're in.</h3>
-          <p class="suc-sub">
-            Lifetime free access is yours.<br><br>
-            We'll be in touch before anyone else gets access.<br><br>
-            Follow <strong>@pointrapp</strong> on Instagram for weekly points tips while you wait.
-          </p>
-        </div>
-
+    <!-- ── FEATURES ─────────────────────────────────────────── -->
+    <div class="features">
+      <div class="section-head">
+        <h2 id="features-title"></h2>
+        <p  id="features-sub"></p>
+      </div>
+      <div class="feat-grid" id="features-grid">
+        <!-- Built by script.js from content.js features.cards array -->
       </div>
     </div>
-  </div>
 
-  <!-- ── FEATURES ── -->
-  <div class="features">
-    <div class="section-head">
-      <h2>What <em>Pointr</em> does</h2>
-      <p>Built for Australians who are tired of leaving money on the table.</p>
+
+    <!-- ── PRIVACY NOTICE ────────────────────────────────────── -->
+    <div class="privacy-notice">
+      <div class="priv-title" id="privacy-title"></div>
+      <div class="priv-text"  id="privacy-text"></div>
     </div>
-    <div class="feat-grid">
-      <div class="feat-card">
-        <div class="feat-icon">$</div>
-        <div class="feat-name">Dollar value daily</div>
-        <div class="feat-desc">See what every program is worth in AUD — updated every day. No more abstract numbers.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon a">⚡</div>
-        <div class="feat-name">One smart action</div>
-        <div class="feat-desc">Each morning: one specific recommendation based on your balances, expiry dates, and live bonus offers.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">⏱</div>
-        <div class="feat-name">Expiry alerts</div>
-        <div class="feat-desc">Never lose points to expiry again. Pointr watches the clock so you don't have to.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon a">📈</div>
-        <div class="feat-name">Points portfolio</div>
-        <div class="feat-desc">Your total rewards value — all programs — shown as a portfolio. Watch it grow over time.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">🎯</div>
-        <div class="feat-name">Goal tracker</div>
-        <div class="feat-desc">Set a target — a flight, an upgrade — and Pointr shows you exactly how close you are.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon a">🔍</div>
-        <div class="feat-name">Daily deals</div>
-        <div class="feat-desc">Bonus point offers from your programs, surfaced daily before they expire.</div>
-      </div>
-    </div>
-  </div>
 
-  <!-- ── PRIVACY NOTICE ── -->
-  <div class="privacy-notice">
-    <div class="priv-title">Privacy &amp; Data Collection Notice</div>
-    <div class="priv-text">
-      Pointr collects personal information (name, email, state, loyalty program preferences) for the purpose of managing early access registration and communicating product updates. Your information is handled in accordance with the <strong>Privacy Act 1988 (Cth)</strong> and the Australian Privacy Principles (APPs). We do not sell, rent, or share your personal information with third parties. Points values shown on this page are indicative estimates only based on publicly available redemption rates (Finder, Australian Frequent Flyer, Point Hacks, May 2026) and do not constitute financial advice. You may request access to, correction of, or deletion of your personal information at any time by emailing <a href="mailto:privacy@pointrapp.com.au">privacy@pointrapp.com.au</a>. By submitting this form you consent to Pointr contacting you with product updates and early access information.
-    </div>
-  </div>
 
-</div><!-- /page -->
+  </div><!-- /page -->
 
-<footer>
-  <div class="ft-logo">Po<em>i</em>ntr</div>
-  <div class="ft-note">Points values are estimates based on May 2026 data. Not financial advice. Pointr is not affiliated with Qantas, Virgin Australia, Coles, or Woolworths. Built in Melbourne. © 2026 Pointr.</div>
-</footer>
 
-<script>
-/* ── VERIFIED POINTS RATES (May 2026) ── 
-   Sources: Finder, Australian Frequent Flyer, Point Hacks
-   All values in cents per point */
-const RATES = {
-  qantas:   { worst: 0.46, mid: 1.8,  best: 8.0,  worstLabel:'Gift card',          bestLabel:'International upgrade' },
-  velocity: { worst: 0.4,  mid: 1.7,  best: 4.0,  worstLabel:'Gift card/store',    bestLabel:'Intl business class' },
-  flybuys:  { worst: 0.5,  mid: 0.5,  best: 1.5,  worstLabel:'Coles checkout',     bestLabel:'Via Velocity transfer' },
-  everyday: { worst: 0.5,  mid: 0.5,  best: 3.0,  worstLabel:'Shopping discount',  bestLabel:'Via Qantas transfer' },
-};
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer>
+    <div class="ft-logo" id="footer-logo"></div>
+    <div class="ft-note" id="footer-note"></div>
+  </footer>
 
-const LABELS = {
-  qantas:   'Qantas Frequent Flyer',
-  velocity: 'Virgin Velocity',
-  flybuys:  'Coles Flybuys',
-  everyday: 'Everyday Rewards',
-};
 
-/* ── STEP NAVIGATION ── */
-function goStep2(){
-  const first = document.getElementById('s1-first').value.trim();
-  const last  = document.getElementById('s1-last').value.trim();
-  const email = document.getElementById('s1-email').value.trim();
-  const state = document.getElementById('s1-state').value;
+  <!-- ============================================================
+       SCRIPTS
+       Load order matters — content and config must come before script.
+  ============================================================ -->
+  <script src="content.js"></script>   <!-- ✏️ Edit this for all text/labels -->
+  <script src="config.js"></script>    <!-- ⚙️ Edit this for behaviour toggles -->
+  <script src="script.js"></script>    <!-- 🔒 Do not edit unless changing logic -->
+  <!-- calculator.js is NOT loaded here — it's a separate tool -->
 
-  if(!first||!last){ alert('Please enter your name.'); return; }
-  if(!email||!email.includes('@')){ alert('Please enter a valid email.'); return; }
-  if(!state){ alert('Please select your state.'); return; }
-
-  // Step 1 data captured — in production, POST this immediately
-  console.log('Step 1:', {first, last, email, state});
-
-  document.getElementById('step1').style.display='none';
-  document.getElementById('step2').style.display='block';
-}
-
-function goStep3(){
-  document.getElementById('step2').style.display='none';
-  document.getElementById('step3').style.display='block';
-}
-
-/* ── CALCULATOR ── */
-let pointsData = {};
-
-function updateCalc(){
-  const checked = [...document.querySelectorAll('input[name="prog"]:checked')].map(c=>c.value);
-  const area    = document.getElementById('calcArea');
-
-  if(checked.length === 0){
-    area.innerHTML = '<p style="font-size:12px;color:var(--muted)">Select your programs above to enter your points.</p>';
-    document.getElementById('totalBanner').classList.remove('show');
-    return;
-  }
-
-  area.innerHTML = checked.map(prog => `
-    <div class="calc-program" id="cp-${prog}">
-      <div class="calc-header">
-        <div class="dot" style="background:${dotColor(prog)}"></div>
-        <div class="calc-name">${LABELS[prog]}</div>
-        <input class="calc-input" type="number" id="pts-${prog}"
-               placeholder="e.g. 45000" min="0"
-               oninput="calcValue('${prog}')"
-               style="width:130px;padding:7px 10px;font-size:13px;text-align:right;
-                      background:var(--surface);border:.5px solid var(--border);
-                      border-radius:8px;color:var(--parchment);font-family:var(--sans);
-                      font-weight:300;outline:none">
-      </div>
-      <div class="value-reveal" id="vr-${prog}"></div>
-    </div>
-  `).join('');
-
-  // Re-render any saved values
-  checked.forEach(p => { if(pointsData[p]) calcValue(p, true); });
-  recalcTotal();
-}
-
-function dotColor(prog){
-  return {qantas:'#E8192C',velocity:'#E8192C',flybuys:'#FFCC00',everyday:'#00A650'}[prog];
-}
-
-function calcValue(prog, restore){
-  const el  = document.getElementById(`pts-${prog}`);
-  const pts = restore ? (pointsData[prog]||0) : parseInt(el.value)||0;
-  if(restore && el) el.value = pts || '';
-
-  const card = document.getElementById(`cp-${prog}`);
-  const vr   = document.getElementById(`vr-${prog}`);
-  if(!vr) return;
-
-  if(!pts || pts <= 0){
-    card.classList.remove('has-value');
-    pointsData[prog] = 0;
-    recalcTotal();
-    return;
-  }
-
-  pointsData[prog] = pts;
-  const r = RATES[prog];
-
-  const worstVal = (pts * r.worst / 100).toFixed(2);
-  const midVal   = (pts * r.mid   / 100).toFixed(2);
-  const bestVal  = (pts * r.best  / 100).toFixed(2);
-
-  // Fill percentage based on mid vs best scale
-  const fillPct = Math.min((r.mid / r.best) * 100, 90);
-
-  vr.innerHTML = `
-    <div class="val-row">
-      <span class="val-label">Worst (${r.worstLabel})</span>
-      <span class="val-num" style="color:var(--stone)">$${fmt(worstVal)}</span>
-    </div>
-    <div class="val-bar"><div class="val-fill" style="width:${(r.worst/r.best*100).toFixed(0)}%"></div></div>
-    <div class="val-row">
-      <span class="val-label">Midpoint (average use)</span>
-      <span class="val-num" style="color:var(--parchment)">$${fmt(midVal)}</span>
-    </div>
-    <div class="val-bar"><div class="val-fill" style="width:${fillPct.toFixed(0)}%"></div></div>
-    <div class="val-row">
-      <span class="val-label">Best case (${r.bestLabel})</span>
-      <span class="val-num best">$${fmt(bestVal)}</span>
-    </div>
-    <p class="val-note" style="margin-top:8px">Estimates · May 2026 · Not financial advice · Verify before redeeming</p>
-  `;
-
-  card.classList.add('has-value');
-  recalcTotal();
-}
-
-function recalcTotal(){
-  const checked = [...document.querySelectorAll('input[name="prog"]:checked')].map(c=>c.value);
-  let total = 0;
-  let hasAny = false;
-
-  checked.forEach(prog => {
-    const pts = pointsData[prog] || 0;
-    if(pts > 0){
-      total += pts * RATES[prog].mid / 100;
-      hasAny = true;
-    }
-  });
-
-  const banner = document.getElementById('totalBanner');
-  if(hasAny){
-    document.getElementById('totalValue').textContent = '$' + fmt(total.toFixed(2));
-    banner.classList.add('show');
-  } else {
-    banner.classList.remove('show');
-  }
-}
-
-function fmt(n){
-  return parseFloat(n).toLocaleString('en-AU', {minimumFractionDigits:0, maximumFractionDigits:0});
-}
-
-/* ── FRUSTRATION ── */
-function selFrust(el, val){
-  document.querySelectorAll('.pill-opt').forEach(p=>p.classList.remove('sel'));
-  el.classList.add('sel');
-  document.getElementById('frustVal').value = val;
-}
-
-/* ── PAY TOGGLE ── */
-function setTog(el, val){
-  document.querySelectorAll('.tog').forEach(t=>t.classList.remove('sel'));
-  el.classList.add('sel');
-  document.getElementById('payVal').value = val;
-  const nf = document.getElementById('noFollowup');
-  nf.classList.toggle('show', val === 'no');
-}
-
-/* ── SUBMIT ── */
-function handleSubmit(){
-  const checked = [...document.querySelectorAll('input[name="prog"]:checked')].map(c=>c.value);
-
-  const submission = {
-    timestamp:    new Date().toISOString(),
-    firstName:    document.getElementById('s1-first').value.trim(),
-    lastName:     document.getElementById('s1-last').value.trim(),
-    email:        document.getElementById('s1-email').value.trim(),
-    state:        document.getElementById('s1-state').value,
-    programs:     checked,
-    pointsEntered: pointsData,
-    frustration:  document.getElementById('frustVal').value,
-    wouldPay:     document.getElementById('payVal').value,
-    noPayReason:  document.getElementById('noReason').value.trim(),
-    source:       document.getElementById('sourceVal').value,
-  };
-
-  console.log('Pointr submission:', submission);
-  // → Replace console.log with your Airtable/Mailchimp API call
-
-  // Show success
-  ['step1','step2','step3'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.style.display='none';
-  });
-  document.getElementById('successState').classList.add('show');
-}
-</script>
 </body>
 </html>
