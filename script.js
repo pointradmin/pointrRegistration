@@ -407,7 +407,7 @@ function handleSubmit() {
     .then(r => r.ok ? showSuccess() : alert('Something went wrong. Please try again.'))
     .catch(() => alert('Something went wrong. Please try again.'));
 
-  } } else if (CONFIG.submitTo === 'airtable') {
+  } else if (CONFIG.submitTo === 'airtable') {
   fetch(`https://api.airtable.com/v0/${CONFIG.airtable.baseId}/${encodeURIComponent(CONFIG.airtable.table)}`, {
     method:  'POST',
     headers: {
