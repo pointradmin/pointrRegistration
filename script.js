@@ -298,7 +298,6 @@ function onProgramChange(checkbox) {
 
 
 // ── FRUSTRATION SELECTION ─────────────────────────────────────
-// ── FRUSTRATION SELECTION ─────────────────────────────────────
 function selFrust(el) {
   // Toggle this option on or off independently
   el.classList.toggle('sel');
