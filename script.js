@@ -52,7 +52,16 @@ function buildPage() {
 
   // ── Nav ────────────────────────────────────────────────────
   setHTML('nav-logo-text', buildLogo(C.nav.logoText));
-  setText('nav-pill-text', C.nav.pillText);
+  // setText('nav-pill-text', C.nav.pillText);
+  // With this — renders the pill as a clickable link:
+  setHTML('nav-pill-text', `
+    <a href="${C.nav.pillLink}" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       style="text-decoration:none; color:inherit;">
+      ${C.nav.pillText}
+    </a>
+  `);
 
   // ── Hero ───────────────────────────────────────────────────
   setText('eyebrow-text', C.hero.eyebrow);
