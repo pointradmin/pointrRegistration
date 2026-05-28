@@ -143,8 +143,7 @@ function buildHeadline(line) {
   //  if (i === 2) return `<span class="hl-amber">${line}</span>`;
   //  return line;
   // }).join('<br>');
-  el.innerHTML = line.replace('po<i>i</i>nts', 'po<em class="hl-violet">i</em>nts')
-                     .replace('points', 'po<em class="hl-violet">i</em>nts');
+  el.innerHTML = line.replace('points', 'po<em class="hl-violet">i</em>nts');
 }
 
 function buildStats(stats) {
