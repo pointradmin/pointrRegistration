@@ -12,11 +12,16 @@ const CONTENT = {
     pageTitle:       "Pointr — Your points, Real money",
     pageDescription: "Australian loyalty points tracker.",
   },
-
+  // ── SOCIALS ──────────────────────────────────────────────
+  social: {
+    instagram:       "https://www.instagram.com/pointr__",
+    instagramHandle: "@pointr__",
+  },
   // ── NAV ────────────────────────────────────────────────────
   nav: {
     logoText:  "Pointr",          // The wordmark. The "i" is always violet — don't remove it.
-    pillText:  "Early Access",    // Small badge top-right of nav
+    pillText:  "Follow us on Instagram",    // Small badge top-right of nav
+    pillLink: "https://www.instagram.com/pointr__"
   },
 
   // ── HERO (left side) ───────────────────────────────────────
@@ -120,8 +125,15 @@ const CONTENT = {
   // ── SUCCESS STATE ───────────────────────────────────────────
   success: {
     icon:    "✓",
-    title:   "You're in.",
-    message: "Voila, you are now 1 step closer to get ahead and to be in control of your points.<br><br>We'll be in touch before anyone else gets access.<br><br>Follow <strong>@pointr__</strong> on Instagram for weekly points tips while you wait.",
+    title:   "Voilà",
+    message: `You are now 1 step closer to get ahead and in control of your points.<br><br>
+              We'll be in touch before anyone else gets access.<br><br>
+              Follow <a href="https://www.instagram.com/pointr__" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style="color:var(--violet);font-weight:500;text-decoration:none;">
+                @pointr__
+              </a> on Instagram for weekly points tips while you wait.`,
   },
 
   // ── FEATURES SECTION ────────────────────────────────────────
