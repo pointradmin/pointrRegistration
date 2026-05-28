@@ -135,15 +135,19 @@ function buildFormTitle(full, emWord) {
   return full.replace(emWord, `<em>${emWord}</em>`);
 }
 
-function buildHeadline(line) {
+function buildHeadline(lines) {
   const el = document.getElementById('hero-headline');
-  if (!el || !line) return;
+  if (!el || !lines) return;
   // el.innerHTML = lines.map((line, i) => {
   //  if (i === 1) return `<span class="hl-violet">${line}</span>`;
   //  if (i === 2) return `<span class="hl-amber">${line}</span>`;
   //  return line;
   // }).join('<br>');
-  el.innerHTML = line.replace('points', 'po<em class="hl-violet">i</em>nts');
+  //el.innerHTML = line.replace('points', 'po<em class="hl-violet">i</em>nts');
+  el.innerHTML = lines.map((line, i) => {
+    if (i === 2) return `<span class="hl-amber">${line}</span>`;
+    return line;
+  }).join('<br>');
 }
 
 function buildStats(stats) {
