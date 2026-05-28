@@ -138,11 +138,13 @@ function buildFormTitle(full, emWord) {
 function buildHeadline(lines) {
   const el = document.getElementById('hero-headline');
   if (!el || !lines) return;
-  el.innerHTML = lines.map((line, i) => {
-    if (i === 1) return `<span class="hl-violet">${line}</span>`;
-    if (i === 2) return `<span class="hl-amber">${line}</span>`;
-    return line;
-  }).join('<br>');
+  // el.innerHTML = lines.map((line, i) => {
+  //  if (i === 1) return `<span class="hl-violet">${line}</span>`;
+  //  if (i === 2) return `<span class="hl-amber">${line}</span>`;
+  //  return line;
+  // }).join('<br>');
+  el.innerHTML = line.replace('po<i>i</i>nts', 'po<em class="hl-violet">i</em>nts')
+                     .replace('points', 'po<em class="hl-violet">i</em>nts');
 }
 
 function buildStats(stats) {
