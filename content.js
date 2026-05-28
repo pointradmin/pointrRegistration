@@ -114,15 +114,14 @@ const CONTENT = {
   // ── SOCIAL PROOF (below submit button) ─────────────────────
   proof: [
     "Australian-built",
-    "Free to join",
-    "No card required",
+    "Free to join"
   ],
 
   // ── SUCCESS STATE ───────────────────────────────────────────
   success: {
     icon:    "✓",
     title:   "You're in.",
-    message: "Voila, you are now 1 step ahead to be in control of your points and their monetary value.<br><br>We'll be in touch before anyone else gets access.<br><br>Follow <strong>@pointr__</strong> on Instagram for weekly points tips while you wait.",
+    message: "Voila, you are now 1 step closer to get ahead and to be in control of your points.<br><br>We'll be in touch before anyone else gets access.<br><br>Follow <strong>@pointr__</strong> on Instagram for weekly points tips while you wait.",
   },
 
   // ── FEATURES SECTION ────────────────────────────────────────
