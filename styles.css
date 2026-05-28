@@ -148,6 +148,8 @@ nav {
 }
 
 .nav-pill {
+  cursor: pointer;
+  transition: opacity 0.2s;
   font-size:        10px;
   font-weight:      600;
   letter-spacing:   0.1em;
@@ -157,6 +159,10 @@ nav {
   border:           0.5px solid var(--vb);
   border-radius:    var(--r-pill);
   padding:          4px 12px;
+}
+
+.nav-pil:hover {
+   opacity: 0.8;
 }
 
 
